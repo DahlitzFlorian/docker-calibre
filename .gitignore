@@ -1,0 +1,12 @@
+# vscode
+.vscode/
+
+# JetBrains
+.idea/
+
+# __pycache__
+__pycache__/
+*/__pycache__/
+
+# OSX
+.DS_Store
