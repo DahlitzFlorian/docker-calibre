@@ -1,4 +1,5 @@
 # Docker Calibre #
+[![Docker Automated Build](https://img.shields.io/badge/docker%20build-automated-blue.svg)](https://cloud.docker.com/u/floriandahlitz/repository/docker/floriandahlitz/docker-calibre)
 ## Description ##
 Contains a Dockerfile generating an image installing [calibre](https://calibre-ebook.com/about) in an alpine environment.
 
