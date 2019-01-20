@@ -1,3 +1,8 @@
 FROM python:3.7.2-alpine
 
-CMD python
+RUN mkdir /calibre
+
+RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin install_dir=/calibre isolated=y
+
+LABEL maintainer="Florian Dahlitz <f2dahlitz@freenet.de>" \
+      version="0.1.0"
