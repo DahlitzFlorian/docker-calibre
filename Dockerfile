@@ -37,4 +37,4 @@ ENV LANGUAGE en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
 LABEL maintainer="Florian Dahlitz <f2dahlitz@freenet.de>" \
-      version="1.1.2"
+      version="1.2.2"
