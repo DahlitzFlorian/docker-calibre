@@ -1,4 +1,4 @@
-FROM python:3.7.2-alpine
+FROM python:3.7.4-alpine
 
 ENV GLIBC_VERSION 2.28-r0
 
@@ -37,4 +37,4 @@ ENV LANGUAGE en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
 LABEL maintainer="Florian Dahlitz <f2dahlitz@freenet.de>" \
-      version="1.0.1"
+      version="1.1.2"
