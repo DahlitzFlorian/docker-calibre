@@ -1,4 +1,5 @@
-# Bomb if anything fails.
+#!/bin/sh
+
 # Set repo name
 REPO=floriandahlitz/docker-calibre
 
@@ -14,7 +15,7 @@ sleep 2
 # Check if Calibre CLI commands are available
 echo "Check if Calibre CLI tools are available..."
 
-RETURN_STRING="$(docker container exec -it $ID ebook-convert)"
+RETURN_STRING="$(docker container exec $ID ebook-convert)"
 
 if [[ $RETURN_STRING == *"Convert an e-book from one format to another."* ]]
 then
