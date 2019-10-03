@@ -28,8 +28,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage:
-      - 'ubuntu-latest'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: Build an image
@@ -43,11 +42,15 @@ stages:
   jobs:  
   - job: Test
     displayName: Test
-    pool:
-      vmImage:
-      - 'ubuntu-latest'
-      - 'macOS-latest'
-      - 'windows-latest'
+    strategy:
+      maxParallel: 2
+      matrix: 
+        Ubuntu:
+          vmImage: 'ubuntu-latest'
+        MacOS:
+          vmImage: 'macOS-latest'
+        Windows:
+          vmImage: 'windows-latest'
     steps:
     - script: |
         make test
@@ -58,8 +61,7 @@ stages:
   - job: Push
     displayName: Push to Docker Hub
     pool:
-      vmImage:
-      - 'ubuntu-latest'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       inputs:
