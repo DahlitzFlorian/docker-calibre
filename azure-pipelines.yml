@@ -12,6 +12,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  repo: 'floriandahlitz/docker-calibre'
 
 stages:
 - stage: Tag
@@ -66,7 +67,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'Docker Hub'
-        repository: 'docker-calibre'
+        repository: $(repo)
         command: 'push'
         tags: |
           latest
