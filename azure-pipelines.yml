@@ -63,7 +63,7 @@ stages:
       inputs:
         containerRegistry: 'Docker Hub'
         repository: floriandahlitz/docker-calibre
-        command: 'push'
+        command: buildAndPush
         tags: |
           latest
           $(VERSION_TAG)
