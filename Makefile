@@ -8,8 +8,8 @@ else
 	docker build -t $(REPO):$(BUILD_NUM) .	
 endif
 
-test: build
-	./test/basics.test.sh
+test:
+	./tests/basics.test.sh
 
 deploy: 
 	docker push $(REPO):latest
