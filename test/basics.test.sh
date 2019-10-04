@@ -17,13 +17,15 @@ echo "Check if Calibre CLI tools are available..."
 
 RETURN_STRING="$(docker container exec $ID ebook-convert)"
 
-if [[ $RETURN_STRING == *"Convert an e-book from one format to another."* ]]
-then
+case $RETURN_STRING in
+    *"Convert an e-book from one format to another."*)
     echo "Calibre CLI tools are available."
-else
+    ;;
+    *)
     echo "Calibre CLI tools NOT available."
     exit 1
-fi
+    ;;
+esac
 
 # Clean up the container.
 echo "Stopping..."
