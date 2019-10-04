@@ -59,7 +59,7 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/tags/*'))
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
       inputs:
         containerRegistry: 'Docker Hub'
         repository: floriandahlitz/docker-calibre
