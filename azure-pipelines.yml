@@ -14,7 +14,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '$(Build.SourceBranchName)'
 
 stages:
   - stage: BuildTest
@@ -50,12 +50,6 @@ stages:
       pool:
         vmImage: 'ubuntu-latest'
       steps:
-      - script: |
-          VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
-        displayName: Set the tag name as an environment variable
-      - script: |
-          echo $VERSION_TAG
-        displayName: Verify that VERSION_TAG is set
       - task: Docker@2
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
@@ -64,3 +58,4 @@ stages:
           command: buildAndPush
           tags: |
             latest
+            $(tag)
