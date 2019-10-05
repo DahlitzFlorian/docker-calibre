@@ -57,5 +57,5 @@ stages:
           repository: floriandahlitz/docker-calibre
           command: buildAndPush
           tags: |
-            latest
             $(tag)
+            latest
