@@ -64,4 +64,3 @@ stages:
           command: buildAndPush
           tags: |
             latest
-            $VERSION_TAG
