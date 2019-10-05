@@ -16,16 +16,6 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-stages:
-- stage: Tag
-  displayName: Set Tag
-  jobs:
-  - job: Tag
-    steps:
-    - script: |
-        VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
-        echo $VERSION_TAG
-      displayName: Set the tag name as an environment variable
 - stage: BuildTest
   displayName: Build and Test
   jobs:  
@@ -53,7 +43,12 @@ stages:
       displayName: 'Test the image'
 - stage: Push
   displayName: Push image
-  jobs:  
+  jobs:
+  - job: Tag
+    steps:
+    - script: |
+        VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
+      displayName: Set the tag name as an environment variable
   - job: Push
     displayName: Push to Docker Hub
     pool:
