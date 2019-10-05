@@ -16,53 +16,54 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-- stage: BuildTest
-  displayName: Build and Test
-  jobs:  
-  - job: BuildTest
+stages:
+  - stage: BuildTest
     displayName: Build and Test
-    strategy:
-      maxParallel: 3
-      matrix: 
-        Ubuntu:
-          vmImage: 'ubuntu-latest'
-        MacOS:
-          vmImage: 'macOS-latest'
-        Windows:
-          vmImage: 'windows-latest'
-    steps:
-    - task: Docker@2
-      displayName: Build the image
-      inputs:
-        command: build
-        dockerfile: '**/Dockerfile'
-        tags: |
-          latest
-    - script: |
-        make test
-      displayName: 'Test the image'
-- stage: Push
-  displayName: Push image
-  jobs:
-  - job: Tag
-    steps:
-    - script: |
-        VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
-      displayName: Set the tag name as an environment variable
-  - job: Push
-    displayName: Push to Docker Hub
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - script: |
-        echo $VERSION_TAG
-      displayName: Print tag for verification
-    - task: Docker@2
-      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-      inputs:
-        containerRegistry: 'Docker Hub'
-        repository: floriandahlitz/docker-calibre
-        command: buildAndPush
-        tags: |
-          latest
-          $VERSION_TAG
+    jobs:  
+    - job: BuildTest
+      displayName: Build and Test
+      strategy:
+        maxParallel: 3
+        matrix: 
+          Ubuntu:
+            vmImage: 'ubuntu-latest'
+          MacOS:
+            vmImage: 'macOS-latest'
+          Windows:
+            vmImage: 'windows-latest'
+      steps:
+      - task: Docker@2
+        displayName: Build the image
+        inputs:
+          command: build
+          dockerfile: '**/Dockerfile'
+          tags: |
+            latest
+      - script: |
+          make test
+        displayName: 'Test the image'
+  - stage: Push
+    displayName: Push image
+    jobs:
+    - job: Tag
+      steps:
+      - script: |
+          VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
+        displayName: Set the tag name as an environment variable
+    - job: Push
+      displayName: Push to Docker Hub
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - script: |
+          echo $VERSION_TAG
+        displayName: Print tag for verification
+      - task: Docker@2
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          containerRegistry: 'Docker Hub'
+          repository: floriandahlitz/docker-calibre
+          command: buildAndPush
+          tags: |
+            latest
+            $VERSION_TAG
